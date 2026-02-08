@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>For Kaira ❤️</title>
+
+<style>
+html{ scroll-behavior:smooth; }
+
+body{
+    margin:0;
+    text-align:center;
+    font-family:Arial;
+    background: linear-gradient(-45deg,#cce5ff,#e6f2ff,#cce5ff,#dbeafe);
+    background-size:400% 400%;
+    animation:gradient 12s ease infinite;
+    overflow-x:hidden;
+}
+
+@keyframes gradient{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+/* NAVBAR */
+.navbar{
+   position:fixed;
+   top:0;
+   width:100%;
+   background:white;
+   padding:15px;
+   box-shadow:0 2px 10px rgba(0,0,0,0.1);
+   z-index:999;
+}
+.navbar a{
+   margin:0 20px;
+   text-decoration:none;
+   color:#0056b3;
+   font-weight:bold;
+}
+
+/* INTRO */
+#intro{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:black;
+    color:white;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+    transition:opacity 1s ease;
+}
+
+/* Glass card */
+.card{
+    background: rgba(255,255,255,0.35);
+    backdrop-filter: blur(15px);
+    padding:40px;
+    border-radius:20px;
+    width:70%;
+    margin:120px auto;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+button{
+    padding:15px 30px;
+    font-size:20px;
+    margin:15px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+}
+button:hover{
+   transform:translateY(-3px);
+   box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+#yes{ background:#007bff; color:white; }
+#no{
+    position:absolute;
+    background:#6c757d;
+    color:white;
+    transition:left 0.6s ease, top 0.6s ease;
+}
+
+.section{
+   padding:80px 20px;
+   border-bottom:1px solid rgba(0,0,0,0.05);
+}
+
+#message{
+    display:none;
+    font-size:28px;
+    color:#0056b3;
+    opacity:0;
+    transition:opacity 1s ease;
+}
+
+/* Confetti */
+.confetti{
+    position:fixed;
+    width:10px;
+    height:10px;
+    top:-10px;
+    animation:fall 5s linear forwards;
+}
+@keyframes fall{
+    0%{ transform:translateY(-10vh) rotate(0deg);}
+    100%{ transform:translateY(100vh) rotate(720deg);}
+}
+
+/* LOVE LETTER POPUP */
+#lovePopup{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    align-items:center;
+    justify-content:center;
+    z-index:2000;
+}
+.popupBox{
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    width:80%;
+    max-width:500px;
+    text-align:center;
+    animation:popupFade 0.6s ease;
+}
+@keyframes popupFade{
+    from{ transform:scale(0.8); opacity:0; }
+    to{ transform:scale(1); opacity:1; }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" autoplay loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<div id="intro">
+  <div id="introText"></div>
+  <button id="enterBtn" onclick="enterSite()" style="display:none">Enter Our Story ❤️</button>
+</div>
+
+<div class="navbar" id="mainContent" style="display:none">
+  <a href="#proposal">Proposal</a>
+  <a href="#story">Our Story</a>
+  <a href="#letter">Love Letter</a>
+</div>
+
+<div class="card" id="proposal">
+<h1>Kaira (Kuchupuchu), Will You Be Mine Forever? ❤️</h1>
+
+<button id="yes" onclick="accepted()">Yes</button>
+<button id="no">No</button>
+
+<div id="message">
+You made my life beautiful on 6 February  
+And today I propose you again — I Love You Forever ❤️
+</div>
+
+<div class="section" id="story">
+<h2>Our Story</h2>
+<p>6 February — The day my world changed forever ✨</p>
+</div>
+
+<div class="section" id="letter">
+<h2>Love Letter</h2>
+<p>My dearest Kaira, Every moment with you feels magical. I promise to love you more every day ❤️</p>
+</div>
+</div>
+
+<!-- POPUP -->
+<div id="lovePopup">
+  <div class="popupBox">
+    <h2>For My Kuchupuchu ❤️</h2>
+    <p>
+    My dearest Kaira,<br><br>
+    From 6 February till forever, every heartbeat of mine belongs to you.
+    I promise to stand beside you, make you smile, and love you more every day.<br><br>
+    — Yours Always ❤️
+    </p>
+    <button onclick="closePopup()">Close ❤️</button>
+  </div>
+</div>
+
+<script>
+document.addEventListener("click", ()=>document.getElementById("bgMusic").play());
+
+let text="On 6 February, my life changed forever... Because that day, Kaira came into my world.";
+let i=0;
+function type(){
+ if(i<text.length){
+  introText.innerHTML+=text.charAt(i);
+  i++; setTimeout(type,40);
+ }else{
+  enterBtn.style.display="inline-block";
+ }
+}
+type();
+
+function enterSite(){
+ intro.style.opacity="0";
+ setTimeout(()=>{
+  intro.style.display="none";
+  mainContent.style.display="block";
+ },1000);
+}
+
+const noBtn=document.getElementById("no");
+noBtn.addEventListener("mouseover",()=>{
+ noBtn.style.left=Math.random()*70+10+"vw";
+ noBtn.style.top=Math.random()*70+10+"vh";
+});
+
+function accepted(){
+ let m=document.getElementById("message");
+ m.style.display="block";
+ setTimeout(()=>m.style.opacity="1",50);
+ startConfetti();
+
+ setTimeout(()=>{
+   document.getElementById("lovePopup").style.display="flex";
+ },1200);
+}
+
+function closePopup(){
+ document.getElementById("lovePopup").style.display="none";
+}
+
+function startConfetti(){
+ setInterval(()=>{
+  let c=document.createElement("div");
+  c.classList.add("confetti");
+  c.style.left=Math.random()*100+"vw";
+  c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+  document.body.appendChild(c);
+  setTimeout(()=>c.remove(),5000);
+ },150);
+}
+</script>
+
+</body>
+</html>
